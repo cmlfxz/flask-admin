@@ -1,0 +1,12 @@
+resources:
+# - configmap.yaml
+# - secrets.yaml
+- flask-tutorial-deployment.yaml
+# - flask-tutorial-pvc.yaml
+# - flask-tutorial-vs.yaml
+- filebeat-configmap.yaml
+# - flask-tutorial-dr.yaml
+
+- flask-tutorial-gateway.yaml
+patchesStrategicMerge:
+- deployment_patch.yaml

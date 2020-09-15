@@ -1,0 +1,104 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-tutorial
+  namespace: ms-dev
+  labels:
+    app: flask-tutorial
+    service: flask-tutorial
+spec:
+  type: NodePort
+  ports:
+  - port: 8081
+    name: http
+  selector:
+    app: flask-tutorial
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: flask-tutorial-sa
+  namespace: ms-dev
+  labels:
+    account: flask-tutorial
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-tutorial
+  namespace: ms-dev
+  labels:
+    app: flask-tutorial
+spec:
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      #更新时允许最大激增的容器数
+      maxSurge: 1
+      #更新时允许最大unavailable的容器数
+      maxUnavailable: 0
+  replicas: 2
+  selector:
+    matchLabels:
+      app: flask-tutorial
+  template:
+    metadata:
+      labels:
+        app: flask-tutorial
+    spec:
+      serviceAccountName: flask-tutorial-sa
+      imagePullSecrets: 
+      - name: harborsecret 
+      containers:
+      - name: flask-tutorial
+        image: myhub.mydocker.com/ms-dev/flask-tutorial:47276bd
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8081
+        volumeMounts:
+        # - name: log
+        #   mountPath: /opt/microservices/logs
+        #   subPath: logs/ms-dev/flask-tutorial
+        - name: log
+          mountPath: /opt/microservices/logs
+        # - name: fromfile-configmap
+        #   mountPath: /opt/microservices/instance
+
+      - name: filebeat
+        # image: docker.elastic.co/beats/filebeat:6.7.0
+        image: myhub.mydocker.com/elk/filebeat:6.7.0
+        # command: ["/bin/sh"] #启动容器的运行命令，将覆盖容器中的Entrypoint,对应Dockefile中的ENTRYPOINT   
+        # args: ["-c","while true;do echo hello;sleep 1;done"]
+        args: [
+          "-c", "/etc/filebeat.yml",
+          "-e",
+        ]
+        resources:
+          limits:
+            cpu: 500m
+            memory: 300Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        securityContext:
+          runAsUser: 0
+        volumeMounts:
+        # #挂载filebeat.yml(在configmap中)
+        - name: filebeat-config
+          mountPath: /etc/filebeat.yml
+          subPath: filebeat.yml
+        - name: log
+          mountPath: /opt/microservices/logs
+      volumes:
+      # - name: fromfile-configmap
+      #   configMap:
+      #     name: flask-tutorial-configmap
+      - name: log
+        emptyDir: {}
+      - name: filebeat-config
+        configMap:
+          name: flask-tutorial-filebeat
+      # - name: log
+      #   persistentVolumeClaim:
+      #     claimName: flask-tutorial-pvc

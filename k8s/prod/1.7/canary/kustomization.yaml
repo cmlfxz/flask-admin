@@ -1,0 +1,5 @@
+namespace: ms-prod
+resources:
+- flask-tutorial-dr.yaml
+- flask-tutorial-vs.yaml
+- flask-tutorial-gateway.yaml

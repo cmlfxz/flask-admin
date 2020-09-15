@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: flask-tutorial-configmap
+  namespace: ms-dev
+data:
+  config.py: |
+    ACCESS_ID='xxx'
+    ACCESS_SECRET='xxx'

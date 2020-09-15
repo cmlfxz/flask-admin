@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-tutorial
+  namespace: ms-prod
+  labels:
+    app: flask-tutorial
+    service: flask-tutorial
+spec:
+  type: NodePort
+  ports:
+  - port: 8081
+    name: http
+  selector:
+    app: flask-tutorial
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: flask-tutorial-sa
+  labels:
+    account: flask-tutorial

@@ -1,0 +1,39 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: flask-tutorial-gateway
+  namespace: ms-prod
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "prod-flask.kkkk.com"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: flask-tutorial-external-vs
+  namespace: ms-prod
+spec:
+  hosts:
+  - "prod-flask.kkkk.com"
+  gateways:
+  - flask-tutorial-gateway
+  http:
+  - match:
+    - uri:
+        prefix: "/"
+    route:
+    - destination:
+        host: flask-tutorial
+        subset: prod
+      weight: $prod_weight
+    - destination:
+        host: flask-tutorial
+        subset: canary
+      weight: $canary_weight

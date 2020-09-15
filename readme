@@ -1,0 +1,134 @@
+本应用案例：
+https://dormousehole.readthedocs.io/en/latest/tutorial/index.html
+https://dormousehole.readthedocs.io/en/latest/tutorial/index.html
+
+上下文：https://flask-sqlalchemy.palletsprojects.com/en/2.x/contexts/
+https://flask-sqlalchemy.palletsprojects.com/en/2.x/contexts/
+https://flask-sqlalchemy.palletsprojects.com/en/2.x/contexts/
+
+应用上下文：
+https://flask.palletsprojects.com/en/1.0.x/appcontext/#manually-push-a-context
+https://flask.palletsprojects.com/en/1.0.x/appcontext/#manually-push-a-context
+https://flask.palletsprojects.com/en/1.0.x/appcontext/#manually-push-a-context
+
+请求上下文：
+https://flask.palletsprojects.com/en/1.0.x/reqcontext/
+
+工厂模式：
+https://flask.palletsprojects.com/en/1.0.x/patterns/appfactories/
+
+蓝图：https://flask.palletsprojects.com/en/1.0.x/blueprints/
+
+CLI command：https://flask.palletsprojects.com/en/1.0.x/cli/
+
+图标库： https://material.iconhelper.cn/?p=2
+
+logging: https://www.cnblogs.com/fengff/p/9512045.html
+
+日志实战： https://www.cnblogs.com/alicelai1319/p/10289798.html
+
+
+flask 处理耗时的任务: https://www.sohu.com/a/341662446_752099
+
+分布式追踪： https://github.com/opentracing-contrib/python-flask
+#            https://scoutapm.com/blog/tutorial-tracing-python-flask-requests-with-opentracing
+
+
+k8s获取：
+/opt/microservices # cat /etc/issue 
+Welcome to Alpine Linux 3.11
+Kernel \r on an \m (\l)
+
+root@flask-tutorial-6494b6bfdf-kmpdk:/opt/microservices# cat /etc/issue
+Debian GNU/Linux 10 \n \l
+
+root@flask-tutorial-6494b6bfdf-kmpdk:/opt/microservices# cat /etc/debian_version 
+10.4
+
+root@flask-tutorial-6494b6bfdf-kmpdk:/opt/microservices# cat /etc/os-release 
+PRETTY_NAME="Debian GNU/Linux 10 (buster)"
+NAME="Debian GNU/Linux"
+VERSION_ID="10"
+VERSION="10 (buster)"
+VERSION_CODENAME=buster
+ID=debian
+HOME_URL="https://www.debian.org/"
+SUPPORT_URL="https://www.debian.org/support"
+BUG_REPORT_URL="https://bugs.debian.org/"
+
+
+
+额外的提示
+你需要在db.create_all发生之前导入models本身：
+
+with app.test_request_context():
+    from application.models import Post
+    db.create_all()
+
+那么保持你的SQLAlchemy对象实例放在不同的文件里，以避免不会循环导入，是一个很好的主意：
+
+# application/database.py
+from flask.ext.sqlalchemy import SQLAlchemy
+db = SQLAlchemy()
+
+# application factory
+from application.database import db
+def create_app():
+    ...
+    db.init_app(app)
+    ...
+
+# application/models.py
+from application.database import db
+class Post(db.Model):
+    ...
+
+工厂模式：
+而是在model.py（或等效文件）中：
+
+db = SQLAlchemy()
+并在您的application.py（或等效文件）中：
+
+def create_app(config_filename):
+    app = Flask(__name__)
+    app.config.from_pyfile(config_filename)
+
+    from yourapplication.model import db
+    db.init_app(app)
+
+
+base64编解码：https://www.cnblogs.com/songzhixue/p/11253243.html
+
+字典可以是单引号，json必须是双引号
+>>> dict ={'env':'dev','version':'1.0'}
+
+>>> print(json.dumps(dict))
+{"env": "dev", "version": "1.0"}
+>>> print(type(json.dumps(dict)))
+<class 'str'>
+
+>>> print(json.loads(json.dumps(dict)))
+{'env': 'dev', 'version': '1.0'}
+
+>>> print(type(json.loads(json.dumps(dict))))
+<class 'dict'>
+
+>>> key='version'
+>>> value='1.0'
+>>> print({key:value})
+{'version': '1.0'}
+>>> print(type({key:value}))
+<class 'dict'>
+
+// 添加环境
+function addEnt(entId) {
+    if(!entId){
+        entId = 0;
+    }
+    var url = "/system/ent/add";
+    var result = get({EntId:entId}, url);
+    $("#add_ent_html").html(result);
+    $("#add_post_html").modal("toggle")
+}
+
+

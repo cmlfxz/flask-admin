@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: flask-tutorial-internal-vs
+  namespace: ms-prod
+spec:
+  hosts:
+  - flask-tutorial
+  http:
+  - route:
+    - destination:
+        host: flask-tutorial
+        subset: prod
+      weight: $prod_weight
+    - destination:
+        host: flask-tutorial
+        subset: canary
+      weight: $canary_weight
