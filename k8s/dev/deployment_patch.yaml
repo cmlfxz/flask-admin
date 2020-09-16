@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flask-tutorial
+  name: flask-admin
   namespace: ms-dev
 spec:
   template:
     spec:
       containers:
-        - name: flask-tutorial
+        - name: flask-admin
           env:
             - name: ENV 
               value: "DEVELOPMENT"
             - name: SERVICE_NAME
-              value: flask-tutorial
+              value: flask-admin
             - name: POD_NAME
               valueFrom:
                 fieldRef:
@@ -33,9 +33,9 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
-            - name: aliyun_logs_flask-tutorial-stdout
+            - name: aliyun_logs_flask-admin-stdout
               value: "stdout"
-            - name: aliyun_logs_flask-tutorial-file
+            - name: aliyun_logs_flask-admin-file
               value: "/opt/microservices/logs/*.log"
           livenessProbe:
             #httpGet:

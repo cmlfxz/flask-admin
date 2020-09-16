@@ -11,11 +11,11 @@ pipeline {
         choice(
             description: '你需要选择哪个模块进行构建 ?',
             name: 'SERVICE',
-            choices: ['flask-tutorial']
+            choices: ['flask-admin']
         )
         string (
             name: 'URL',
-            defaultValue: 'https://gitee.com/cmlfxz/flask-tutorial.git',
+            defaultValue: 'https://gitee.com/cmlfxz/flask-admin.git',
             description: 'git url'
         )
         string(

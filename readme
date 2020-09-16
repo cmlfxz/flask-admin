@@ -39,13 +39,13 @@ k8s获取：
 Welcome to Alpine Linux 3.11
 Kernel \r on an \m (\l)
 
-root@flask-tutorial-6494b6bfdf-kmpdk:/opt/microservices# cat /etc/issue
+root@flask-admin-6494b6bfdf-kmpdk:/opt/microservices# cat /etc/issue
 Debian GNU/Linux 10 \n \l
 
-root@flask-tutorial-6494b6bfdf-kmpdk:/opt/microservices# cat /etc/debian_version 
+root@flask-admin-6494b6bfdf-kmpdk:/opt/microservices# cat /etc/debian_version 
 10.4
 
-root@flask-tutorial-6494b6bfdf-kmpdk:/opt/microservices# cat /etc/os-release 
+root@flask-admin-6494b6bfdf-kmpdk:/opt/microservices# cat /etc/os-release 
 PRETTY_NAME="Debian GNU/Linux 10 (buster)"
 NAME="Debian GNU/Linux"
 VERSION_ID="10"

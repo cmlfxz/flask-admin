@@ -12,28 +12,28 @@ import json
 
 blog = Blueprint('blog',__name__)
 
-@blog.route('/')
-def index():
-    user_id = None
-    try:
-        user_id = int(session['user_id'])
-    except KeyError as e:
-        current_app.logger.error(e)
-    except Exception as e: 
-        current_app.logger.error("session异常:{}".format(e))
-    sql = None
-    #这里需要考虑admin的情况吗
-    admin = User.query.filter(User.username == 'admin').first()
+# @blog.route('/')
+# def index():
+#     user_id = None
+#     try:
+#         user_id = int(session['user_id'])
+#     except KeyError as e:
+#         current_app.logger.error(e)
+#     except Exception as e: 
+#         current_app.logger.error("session异常:{}".format(e))
+#     sql = None
+#     #这里需要考虑admin的情况吗
+#     admin = User.query.filter(User.username == 'admin').first()
     
-    if user_id and user_id != admin.id:
-        current_app.logger.debug("index 用户id:{}".format(user_id))
-        sql = db.session.query(User.username,Post.id,Post.title,Post.body,Post.created,Post.author_id).\
-            join(User,Post.author_id==User.id).filter(User.id==user_id).order_by(Post.created.desc())
-    else:
-        sql = db.session.query(User.username,Post.id,Post.title,Post.body,Post.created,Post.author_id).\
-            join(User,Post.author_id==User.id).order_by(Post.created.desc())
-    posts = sql.all()    
-    return render_template('blog/index.html',posts=posts)
+#     if user_id and user_id != admin.id:
+#         current_app.logger.debug("index 用户id:{}".format(user_id))
+#         sql = db.session.query(User.username,Post.id,Post.title,Post.body,Post.created,Post.author_id).\
+#             join(User,Post.author_id==User.id).filter(User.id==user_id).order_by(Post.created.desc())
+#     else:
+#         sql = db.session.query(User.username,Post.id,Post.title,Post.body,Post.created,Post.author_id).\
+#             join(User,Post.author_id==User.id).order_by(Post.created.desc())
+#     posts = sql.all()    
+#     return render_template('blog/index.html',posts=posts)
 
 @blog.route('/blog/create',methods={'GET','POST'})
 @login_required
@@ -62,8 +62,6 @@ def add():
         body = handle_input(data.get('body'))
         username = handle_input(data.get('username'))
         user = User.query.filter(User.username == username).first() 
-        # title = request.form['title']
-        # body = request.form['body']
         if user:
             post = Post(title=title,body=body,author_id=user.id)
             db.session.add(post)
@@ -89,45 +87,11 @@ def get_post(id,check_author=True):
     sql = db.session.query(User.username,Post.id,Post.title,Post.body,Post.created,Post.author_id).\
         join(User,Post.author_id==User.id).filter(Post.id==id)
     post = sql.first()
-
     admin = User.query.filter(User.username == 'admin').first()
     if check_author and post.author_id != g.user.id and g.user.id != admin.id:
         abort(403)
         
     return post
-
-# @blog.route('/blog/<int:id>/update', methods=('GET', 'POST'))
-# @login_required
-# def update(id):
-#     print("update {}".format(id))
-#     post = get_post(id,check_author=True)
-#     if request.method == 'POST':
-#         title = request.form['title']
-#         body = request.form['body']
-#         error = None 
-        
-#         if not title:
-#             error = 'Title is required'
-#         if error is not None:
-#             flask(error)
-#         else:
-#             Post.query.filter(Post.id==id).update({'title':title,'body':body})
-#             db.session.commit()
-#             return redirect(url_for('index'))
-#     return render_template('blog/update.html', post=post)
-        
-# @blog.route('/blog/<int:id>/delete', methods=('GET', 'POST'))
-# @login_required
-# def delete(id):
-#     try:
-#         post = Post.query.filter(Post.id==id).first()
-#         print("delete {}".format(post))
-#         db.session.delete(post)
-#         db.session.commit()
-#     except Exception as e:
-#         print(e)
-#         # return redirect(url_for('index')) 
-#     return redirect(url_for('blog.index'))
 
 @blog.route('/blog/delete', methods=('GET', 'POST'))
 def delete():
@@ -141,20 +105,6 @@ def delete():
         return json.dumps({"ok":"删除文章成功"})
     except Exception as e:
         return json.dumps({"fail":"删除文章失败","error":e})
-
-# @blog.route('/blog/<int:id>/show_article',methods={'GET','POST'})
-# # @login_required
-# def show_article(id):
-#     error = None
-#     if id is None:
-#         error = "id为空"
-#     if error is not None:
-#         flash(error)
-#     sql = Post.query.filter(Post.id==id)
-#     post = sql.first_or_404()
-
-#     return render_template("blog/show_article.html",post=post)
-
 
 @blog.route('/blog/detail',methods={'GET','POST'})
 # @login_required

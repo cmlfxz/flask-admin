@@ -11,7 +11,7 @@ import re
 
 from flaskr.views.auth import auth
 from flaskr.views.blog import blog
-from flaskr.views.frontend_k8s import frontend_k8s
+from flaskr.views.admin import admin
 from flaskr.models.db import db
 from flaskr.models.user import User
 from flaskr.models.post import Post
@@ -136,7 +136,7 @@ def create_app():
     #加载蓝图
     app.register_blueprint(auth)
     app.register_blueprint(blog)
-    app.register_blueprint(frontend_k8s)
+    app.register_blueprint(admin)
     
     app.add_url_rule('/',endpoint='index')
     

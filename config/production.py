@@ -23,7 +23,7 @@ MYSQL_HOST = '192.168.11.200'
 MYSQL_PORT = 52100
 MYSQL_DATABASE = 'tutorial'
 
-# SQLALCHEMY_DATABASE_URI ="mysql+pymysql://dev_user:abc123456@192.168.11.200:52100/flask-tutorial?charset=utf8"
+# SQLALCHEMY_DATABASE_URI ="mysql+pymysql://dev_user:abc123456@192.168.11.200:52100/flask-admin?charset=utf8"
 # SQLALCHEMY_DATABASE_URI = '{}+{}://{}:{}@{}:{}/{}?charset=utf8'.format(
 #     DIALECT,MYSQL_DRIVER,MYSQL_USERNAME,MYSQL_PASSWORD,MYSQL_HOST,MYSQL_PORT,MYSQL_DATABASE
 # )

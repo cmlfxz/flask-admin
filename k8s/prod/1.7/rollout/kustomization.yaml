@@ -1,4 +1,4 @@
 namespace: ms-prod
 resources:
-- flask-tutorial-vs.yaml
+- flask-admin-vs.yaml
 

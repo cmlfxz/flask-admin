@@ -4,7 +4,7 @@ namespace=default
 find ./* -name "*.y*ml"  |xargs sed -i  "s/\$namespace/${namespace}/"
 
 
-service=flask-tutorial
+service=flask-admin
 find ./* -name "*.y*ml"  |xargs sed -i  "s/\$service/${service}/"
 
 harbor_registry=myhub.mydocker.com

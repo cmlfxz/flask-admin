@@ -1,13 +1,13 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flask-tutorial-1.7
+  name: flask-admin-1.7
   namespace: ms-prod
 spec:
   template:
     spec:
       containers:
-        - name: flask-tutorial
+        - name: flask-admin
           env:
             - name: ENV 
               value: "PRODUCTION"

@@ -1,12 +1,12 @@
 #!/bin/bash
-rm -rf flask-tutorial
+rm -rf flask-admin
 
-git clone https://cmlfxz:dugu16829987@gitee.com/cmlfxz/flask-tutorial.git
+git clone https://cmlfxz:dugu16829987@gitee.com/cmlfxz/flask-admin.git
 #git checkout release-0.2
 #git rev-parse --short HEAD
 
 project='ms'
-service=flask-tutorial
+service=flask-admin
 
 if [ "$1" == "dev" ];then
     harbor_user="cmlfxz"

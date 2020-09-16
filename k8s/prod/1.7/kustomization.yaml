@@ -1,7 +1,7 @@
 namespace: ms-prod
 resources:
-- flask-tutorial-deployment.yaml
-- flask-tutorial-service.yaml
+- flask-admin-deployment.yaml
+- flask-admin-service.yaml
 - secrets.yaml
 - hpa.yaml
 

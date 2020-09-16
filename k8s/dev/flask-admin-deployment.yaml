@@ -1,34 +1,34 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: flask-tutorial
+  name: flask-admin
   namespace: ms-dev
   labels:
-    app: flask-tutorial
-    service: flask-tutorial
+    app: flask-admin
+    service: flask-admin
 spec:
   type: NodePort
   ports:
   - port: 8081
     name: http
   selector:
-    app: flask-tutorial
+    app: flask-admin
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: flask-tutorial-sa
+  name: flask-admin-sa
   namespace: ms-dev
   labels:
-    account: flask-tutorial
+    account: flask-admin
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flask-tutorial
+  name: flask-admin
   namespace: ms-dev
   labels:
-    app: flask-tutorial
+    app: flask-admin
 spec:
   minReadySeconds: 5
   strategy:
@@ -41,25 +41,25 @@ spec:
   replicas: 2
   selector:
     matchLabels:
-      app: flask-tutorial
+      app: flask-admin
   template:
     metadata:
       labels:
-        app: flask-tutorial
+        app: flask-admin
     spec:
-      serviceAccountName: flask-tutorial-sa
+      serviceAccountName: flask-admin-sa
       imagePullSecrets: 
       - name: harborsecret 
       containers:
-      - name: flask-tutorial
-        image: myhub.mydocker.com/ms-dev/flask-tutorial:47276bd
+      - name: flask-admin
+        image: myhub.mydocker.com/ms-dev/flask-admin:47276bd
         imagePullPolicy: Always
         ports:
         - containerPort: 8081
         volumeMounts:
         # - name: log
         #   mountPath: /opt/microservices/logs
-        #   subPath: logs/ms-dev/flask-tutorial
+        #   subPath: logs/ms-dev/flask-admin
         - name: log
           mountPath: /opt/microservices/logs
         # - name: fromfile-configmap
@@ -93,12 +93,12 @@ spec:
       volumes:
       # - name: fromfile-configmap
       #   configMap:
-      #     name: flask-tutorial-configmap
+      #     name: flask-admin-configmap
       - name: log
         emptyDir: {}
       - name: filebeat-config
         configMap:
-          name: flask-tutorial-filebeat
+          name: flask-admin-filebeat
       # - name: log
       #   persistentVolumeClaim:
-      #     claimName: flask-tutorial-pvc
+      #     claimName: flask-admin-pvc

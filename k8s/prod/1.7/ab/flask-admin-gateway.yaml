@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: flask-tutorial-gateway
+  name: flask-admin-gateway
   namespace: ms-prod
 spec:
   selector:
@@ -17,23 +17,23 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: flask-tutorial-external-vs
+  name: flask-admin-external-vs
   namespace: ms-prod
 spec:
   hosts:
   - "prod-flask.kkkk.com"
   gateways:
-  - flask-tutorial-gateway
+  - flask-admin-gateway
   http:
   - match:
     - uri:
         prefix: "/"
     route:
     - destination:
-        host: flask-tutorial
+        host: flask-admin
         subset: prod
       weight: $prod_weight
     - destination:
-        host: flask-tutorial
+        host: flask-admin
         subset: canary
       weight: $canary_weight

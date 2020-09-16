@@ -1,7 +1,7 @@
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: flask-tutorial-hpa
+  name: flask-admin-hpa
   namespace: ms-prod
 spec:
   maxReplicas: 5
@@ -9,5 +9,5 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: flask-tutorial-1.7
+    name: flask-admin-1.7
   targetCPUUtilizationPercentage: 70

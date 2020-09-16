@@ -42,22 +42,14 @@ def register():
         error = None
         if not username or  not password:
             error = "Username or password is required"
-        # if not username:
-        #     error = "Username is required"
-        # elif not password:
-        #     error = "Password is required"
         else:
             user = User.query.filter(User.username == username).first() 
-            #是一个类
-            # current_app.logger.debug(type(user))
             if user is not None:
                 error = 'User {} is already registered.'.format(username)
-        
         if error == None:
             user = User(username=username,password= my_encode(password))
             db.session.add(user)
             db.session.commit()
-            # return "注册成功"
             return redirect(url_for('auth.login'))
         
         flash(error)
@@ -67,14 +59,12 @@ def register():
     except TemplateNotFound:
         abort(404)
 
-# #客户端输入账号密码登录
-# #比对账号密码 有 就登录成功，跳转到index，没有则提示用户没注册，跳转注册页面
-# #账号密码错误，停留在本页，提示用户重新输入
+# 客户端输入账号密码登录
+# 比对账号密码 有 就登录成功，跳转到index，没有则提示用户没注册，跳转注册页面
+# 账号密码错误，停留在本页，提示用户重新输入
 @auth.route('/login',methods=('GET','POST'))
 def login():
     if request.method == 'POST':
-        # username = request.form['username']
-        # password = request.form['password']
         data = json.loads(request.get_data().decode('utf-8'))
         current_app.logger.debug("login收到的数据:{}".format(data))
         username = data.get("username").strip()
@@ -101,11 +91,8 @@ def login():
             session['user_name'] = user.username
             #设置集群
             return jsonify({'msg':'ok'})
-            # return redirect(url_for('index'))
         return jsonify({'msg':'fail','reason':'账号密码验证失败'})
-        # flash(error) 
-    
-    # return render_template("auth/login.html")
+
 
 @auth.before_app_request
 def load_logged_in_user():
