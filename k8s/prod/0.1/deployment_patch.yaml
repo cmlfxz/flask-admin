@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flask-admin-1.7
+  name: flask-admin-0.1
   namespace: ms-prod
 spec:
   template:

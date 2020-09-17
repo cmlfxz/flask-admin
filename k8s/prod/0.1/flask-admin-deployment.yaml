@@ -1,29 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flask-admin-1.7
+  name: flask-admin-0.1
   namespace: ms-prod
   labels:
     app: flask-admin
-    version: "1.7"
+    version: "0.1"
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: flask-admin
-      version: "1.7"
+      version: "0.1"
   template:
     metadata:
       labels:
         app: flask-admin
-        version: "1.7"
+        version: "0.1"
     spec:
       serviceAccountName: flask-admin-sa
       imagePullSecrets: 
       - name: harborsecret 
       containers:
       - name: flask-admin
-        image: myhub.mydocker.com/ms-prod/flask-admin:1.7
+        image: myhub.mydocker.com/ms-prod/flask-admin:0.1
         imagePullPolicy: Always
         ports:
         - containerPort: 8081
