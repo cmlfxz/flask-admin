@@ -2,5 +2,5 @@ namespace: ms-prod
 resources:
 # 暂时用不到这些文件
 - flask-admin-dr.yaml
-- flask-admin-gateway.yaml
+# - flask-admin-gateway.yaml
 
